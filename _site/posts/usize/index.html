@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crunching Numbers</title>
+  <title>Why do we need `usize` to index collections in Rust?</title>
   <meta name="description" content="Crunching Numbers">
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@_strbrgr" />
@@ -510,8 +510,36 @@ pre[class*="language-"] {
   </header>
 
   <main>
-    <h1 id="content-not-found." tabindex="-1">content not found. <a class="header-anchor" href="#content-not-found."><span>#</span></a></h1>
-<p>Go <a href="/">home</a>.</p>
+    <h1>Why do we need `usize` to index collections in Rust?</h1>
+
+<ul class="post__metadata">
+	<li><time datetime="2024-12-20">20 December 2024</time></li>
+	<li><a href="/tags/rust/" class="post__tag">rust</a></li>
+</ul>
+
+<section class="post__content">
+  <p>During Advent of Code I ran into the following error:</p>
+<pre class="language-rust" tabindex="0"><code class="language-rust">error<span class="token punctuation">[</span><span class="token constant">E0277</span><span class="token punctuation">]</span><span class="token punctuation">:</span> the <span class="token keyword">type</span> `<span class="token punctuation">[</span><span class="token punctuation">{</span>integer<span class="token punctuation">}</span><span class="token punctuation">]</span>` cannot be indexed by `<span class="token keyword">i32</span>`</code></pre>
+<p>This happened when I tried to access the index of a vector like in the following example:</p>
+<pre class="language-rust" tabindex="0"><code class="language-rust"><span class="token keyword">let</span> array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span class="token keyword">let</span> index<span class="token punctuation">:</span> <span class="token keyword">i32</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token comment">// This won't compile:</span>
+<span class="token keyword">let</span> element <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Now why exactly can't we use a <code>i32</code> to index a collection? And what does the type <code>usize</code> represent?</p>
+<h2 id="usize" tabindex="-1">usize <a class="header-anchor" href="#usize"><span>#</span></a></h2>
+<p>The Rust documentation reads:</p>
+<blockquote>
+<p>This type describes the pointer-sized unsigned integer type and is used to index and measure memory. The size of this primitive is how many bytes it takes to reference any location in memory. For example, on a 32 bit target, this is 4 bytes and on a 64 bit target, this is 8 bytes.</p>
+</blockquote>
+<p>A pointer-sized integer refers to an integer that's the same size (in bytes) as a memory address (pointer) on your computer's architecture.  That means that on a 32-bit architecture we need 2<sup>32</sup> different values to address all possible memory locations.</p>
+<p>This is especially important when indexing collections as you can't have an array index larger than addressable memory.
+Even if a <code>i32</code> value would numerically fit within the bounds of a <code>usize</code> on a 64-bit system, Rust requires an explicit cast.</p>
+<p><strong>This is a deliberate design choice for type safety.</strong>
+The goal is to ensure that indexing of a collection is done with the platform's native size type in mind, reducing bugs and forcing us to think about type conversions.</p>
+<p>While a <code>i32</code> fits into a <code>usize</code>, the opposite is not always true. Be specific about your intent.</p>
+
+</section>
+
 
   </main>
 </body>

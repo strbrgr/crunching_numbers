@@ -7,63 +7,92 @@
   <title>Crunching Numbers</title>
   <meta name="description" content="Crunching Numbers">
   <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Crunching Numbers" />
-    <meta name="twitter:description" content="Crunching Numbers" />
+  <meta name="twitter:site" content="@_strbrgr" />
+  <meta name="twitter:title" content="Jochen Stierberger" />
+  <meta name="twitter:description" content="Personal Website" />
+  <meta name="twitter:image" content="https://jochen.fyi/og.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Crunching Numbers" />
-  <meta property="og:description" content="Crunching Numbers" />
-    <meta property="og:url" content="https://crunchingnumbers.io/" />
+  <meta property="og:title" content="Jochen Stierberger" />
+  <meta property="og:description" content="Personal Website" />
+  <meta property="og:url" content="https://jochen.fyi" />
+  <meta property="og:image" content="https://jochen.fyi/og.png" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🍋</text></svg>" />
-  <style>* {
+  <style>.postlist { counter-reset: start-from 2 }
+* {
   margin: 0;
-  --c-t: #212121;
-  --c-bg: #f8f9fa;
+  --c-t: #171d20;
+  --c-bg: hsla(12, 61%, 97%, 0.8);
+  --c-syntax: #fabd2f;
   --c-100: #212529;
   --c-200: #2E3338;
   --c-300: #B7C3CC;
   --c-400: #CFD7DD;
   --c-500: #E7EBEE;
-  --font: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
-  --font-code: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+  --c-link: #fa8e2f;
+  --serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol ;
+  --sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+  --monospace: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; 
 }
 
 @media (prefers-color-scheme: dark) {
   * {
-    --c-t: #f8f9fa;
-    --c-bg: #212121;
+    --c-t: hsla(12, 61%, 97%, 0.8);
+    --c-bg: #171d20;
+    --c-syntax: #fabd2f;
     --c-100: #f8f9fa;
     --c-200: #B8C1CC;
     --c-300: #42484C;
     --c-400: #383D43;
     --c-500: #2E3338;
     --c-600: #212529;
+    --c-link: #fa8e2f;
   }
 }
 
 body {
-  font: 1.25rem var(--font);
+  font: 1rem var(--sans-serif);
   line-height: 1.4;
   color: var(--c-t);
   background: var(--c-bg);
-  max-width: 36em;
+  max-width: 40em;
   margin: 0 auto;
   padding: 0 0.7em;
-  text-align: justify;
 }
 
 main {
-  margin: 3em 0;
+  margin: 3em 1em;
 }
 
-a {
-  color: var(--c-100);
+a:not(li a):not(header a) {
+  color: var(--c-link);
   text-decoration: underline;
   transition: .05s;
 }
 
+a:not(li a):not(header a):hover {
+  color: #b3621b;
+  text-decoration: underline;
+  transition: .05s;
+}
+
+
 a:hover {
   color: var(--c-200);
+}
+
+a[href^="#day"] {
+  margin-right: .5rem;
+}
+
+p:has(a[href^="#day"]) {
+  text-align: center;
+}
+
+header a, li a {
+  color: var(--c-t);
+  text-decoration: underline;
+  transition: .05s;
 }
 
 *::selection {
@@ -71,7 +100,18 @@ a:hover {
   color: var(--c-bg);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+{
+  font-family: var(--sans-serif);
+}
+
 p {
+  font-family: var(--serif);
   margin-bottom: 1em;
 }
 
@@ -110,7 +150,7 @@ header>a {
 }
 
 blockquote {
-  background-color: var(--c-500);
+  padding-left: .25rem;
   border-left: 2px solid var(--c-300);
 
   p {
@@ -123,10 +163,337 @@ ul {
   margin-bottom: .5em;
   padding-left: 2em;
   list-style-type: circle;
+
+  li {
+  font-family: var(--serif);
+  }
 }
 
 ol {
   margin: 1em 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 3rem 0;
+}
+
+thead {
+  background-color: var(--c-500);
+}
+
+thead th {
+  padding: 1em;
+  font-size: .9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--c-200);
+}
+
+th:last-child {
+  text-align: right;
+}
+
+td {
+  width: 100%;
+  padding: 1em;
+  text-align: left;
+  font-size: .9rem;
+}
+
+td:last-child {
+  white-space: nowrap;
+  text-align: right;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--c-200);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: var(--c-400);
+}
+
+tbody tr:nth-child(even) {
+  background-color: var(--c-300);
+}
+
+.postlist {
+  list-style: none;
+  padding: 0;
+  padding-left: 1.5rem;
+}
+
+.postlist__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  counter-increment: start-from -1;
+  margin-bottom: 1em;
+}
+
+.postlist__item:before {
+  display: inline-block;
+  pointer-events: none;
+  content: "" counter(start-from, decimal-leading-zero) ". ";
+  line-height: 100%;
+  text-align: right;
+  margin-left: -1.5rem;
+}
+
+.postlist__date,
+.postlist__item:before {
+  font-size: 0.8125em;
+  color: var(--color-gray-90);
+}
+
+.postlist__date {
+  word-spacing: -0.5px;
+}
+
+.postlist__link {
+  font-size: 1.1875em;
+  font-weight: 700;
+  flex-basis: calc(100% - 1.5rem);
+  padding-left: .25em;
+  padding-right: .5em;
+  text-underline-position: from-font;
+  text-underline-offset: 0;
+  text-decoration-thickness: 1px;
+}
+
+.postlist__item-active .postlist__link {
+  font-weight: bold;
+}
+
+.post__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  font-style: italic;
+}
+
+.postlist__item>.post__tag {
+  align-self: center;
+}
+
+/* Tags list */
+.post__metadata {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .5em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post__metadata time {
+  margin-right: 1em;
+}
+
+.post__content {
+  margin: 2rem 0;
+}
+
+.post__nextprev {
+  list-style: none;
+  padding: 0;
+}
+
+pre[class^="language-"] {
+  background: var(--c-500);
+  padding: 1em;
+  font-size: 0.8em;
+  margin: 1em 0;
+  overflow: scroll;
+}
+
+code {
+  line-height: 1.5em;
+  padding: 0 2px;
+  margin: -1px 0px;
+}
+
+/* Selects <code> that is not in <pre>
+ * to target inline code elements
+ * */
+code:not(pre code) {
+  color: var(--c-syntax);
+  font-size: 1rem;
+}
+
+code:not(pre code)::before {
+  content: "`";
+}
+
+code:not(pre code)::after {
+  content: "`";
+}
+
+.centered {
+  display: block;
+  margin: 0 auto;
+}
+
+.post {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block-start: 2rem;
+    position: relative;
+  }
+}
+
+hr {
+  margin-block-end: 3rem;
+  margin-block-start: 2rem;
+}
+/**
+ * Gruvbox dark theme
+ *
+ * Adapted from a theme based on:
+ * Vim Gruvbox dark Theme (https://github.com/morhetz/gruvbox)
+ *
+ * @author Azat S. <to@azat.io>
+ * @version 1.0
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #ebdbb2; /* fg1 / fg */
+	font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection {
+	color: #fbf1c7; /* fg0 */
+	background: #7c6f64; /* bg4 */
+}
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+	color: #fbf1c7; /* fg0 */
+	background: #7c6f64; /* bg4 */
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: 0.5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #1d2021; /* bg0_h */
+  border-radius: 1rem;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: 0.1em;
+	border-radius: 0.3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+	color: #a89984; /* fg4 / gray1 */
+}
+
+.token.delimiter,
+.token.boolean,
+.token.keyword,
+.token.selector,
+.token.important,
+.token.atrule {
+	color: #fb4934; /* red2 */
+}
+
+.token.operator,
+.token.punctuation,
+.token.attr-name {
+	color: #a89984; /* fg4 / gray1 */
+}
+
+.token.tag,
+.token.tag .punctuation,
+.token.doctype,
+.token.builtin {
+	color: #fabd2f; /* yellow2 */
+}
+
+.token.entity,
+.token.number,
+.token.symbol {
+	color: #d3869b; /* purple2 */
+}
+
+.token.property,
+.token.constant,
+.token.variable {
+	color: #fb4934; /* red2 */
+}
+
+.token.string,
+.token.char {
+	color: #b8bb26; /* green2 */
+}
+
+.token.attr-value,
+.token.attr-value .punctuation {
+	color: #a89984; /* fg4 / gray1 */
+}
+
+.token.url {
+	color: #b8bb26; /* green2 */
+	text-decoration: underline;
+}
+
+.token.function {
+	color: #fabd2f; /* yellow2 */
+}
+
+.token.regex {
+	background: #b8bb26; /* green2 */
+}
+
+.token.bold {
+	font-weight: bold;
+}
+
+.token.italic {
+	font-style: italic;
+}
+
+.token.inserted {
+	background: #a89984; /* fg4 / gray1 */
+}
+
+.token.deleted {
+	background: #fb4934; /* red2 */
 }</style>
 </head>
 
@@ -136,6 +503,8 @@ ol {
 
     <nav>
       <ul class="nav__list">
+        <li class="nav__item"><a href="/posts/" >Posts</a></li>
+        <li class="nav__item"><a href="/about/" >About</a></li>
         <!-- <li class="nav__item"><a href="feed.xml">RSS</a></li> -->
       </ul>
     </nav>
@@ -144,7 +513,28 @@ ol {
   <main>
     
 
-<h1>Hi.</h1>
+<h1>Hey, Hola, 你好, Bonjour, नमस्ते, 안녕하세요, مرحبا, Здравствуйте!</h1>
+
+<p>CrunchingNumbers is the outcome of thinking about great domain names on a Friday night. Now that I have this domain name, I have to do something with it. For now, it captures everything that interests within the Rust ecosystems and programming in general.</p>
+
+
+<h1>Latest 1 Post</h1>
+
+
+
+
+<ol reversed class="postlist">
+
+	<li class="postlist__item">
+		<a href="/posts/usize/" class="postlist__link">Why do we need `usize` to index collections in Rust?</a>
+		<time class="postlist__date" datetime="2024-12-20">December 2024</time>
+	</li>
+
+</ol>
+
+
+
+
 
 
 

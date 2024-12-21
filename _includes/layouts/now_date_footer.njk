@@ -1,0 +1,6 @@
+---
+layout: layouts/now.njk
+---
+{{content | safe}}
+<footer>Last updated: <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+</footer>

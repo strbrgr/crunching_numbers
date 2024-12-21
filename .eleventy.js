@@ -4,8 +4,63 @@ const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const pluginBundle = require("@11ty/eleventy-plugin-bundle");
 const pluginNavigation = require("@11ty/eleventy-navigation");
 const { EleventyHtmlBasePlugin } = require("@11ty/eleventy");
+const markdownIt = require("markdown-it");
+const markdownItAnchor = require("markdown-it-anchor");
+
+// This object is required inside the renderPermalink function.
+// It's copied directly from the plugin source code.
+const position = {
+  false: "push",
+  true: "unshift",
+}
+
+// Copied directly from the plugin source code, with one edit
+// (marked with comments)
+const renderPermalink = (slug, opts, state, idx) => {
+  const space = () =>
+    Object.assign(new state.Token("text", "", 0), {
+      content: " ",
+    })
+
+  const linkTokens = [
+    Object.assign(new state.Token("link_open", "a", 1), {
+      attrs: [
+        ["class", opts.permalinkClass],
+        ["href", opts.permalinkHref(slug, state)],
+      ],
+    }),
+    Object.assign(new state.Token("html_block", "", 0), {
+      content: `<span>#</span>`,
+    }),
+    new state.Token("link_close", "a", -1),
+  ]
+
+  if (opts.permalinkSpace) {
+    linkTokens[position[!opts.permalinkBefore]](space())
+  }
+  state.tokens[idx + 1].children[position[opts.permalinkBefore]](
+    ...linkTokens
+  )
+}
 
 module.exports = function(eleventyConfig) {
+  // Options for the `markdown-it` library
+  const markdownItOptions = {
+    html: true,
+  }
+    // Options for the `markdown-it-anchor` library
+  const markdownItAnchorOptions = {
+    permalink: true,
+    renderPermalink
+  }
+
+  const markdownLib = markdownIt(markdownItOptions).use(
+    markdownItAnchor,
+    markdownItAnchorOptions
+  )
+
+  eleventyConfig.setLibrary("md", markdownLib)
+
   // Copy the contents of the `public` folder to the output folder
   // For example, `./public/css/` ends up in `_site/css/`
   eleventyConfig.addPassthroughCopy({

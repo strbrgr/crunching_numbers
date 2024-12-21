@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xml:base="https://jochen.fyi/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jochen Stierberger</title>
+    <link>https://jochen.fyi/</link>
+    <atom:link href="https://jochen.fyi/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Short writings about everything related to software engineering.</description>
+    <language>en</language>
+    <item>
+      <title>Why do we need `usize` to index collections in Rust?</title>
+      <link>https://jochen.fyi/posts/usize/</link>
+      <description>&lt;p&gt;During Advent of Code I ran into the following error:&lt;/p&gt;
+&lt;pre class=&quot;language-rust&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;error&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;E0277&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; the &lt;span class=&quot;token keyword&quot;&gt;type&lt;/span&gt; `&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;integer&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;` cannot be indexed by `&lt;span class=&quot;token keyword&quot;&gt;i32&lt;/span&gt;`&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This happened when I tried to access the index of a vector like in the following example:&lt;/p&gt;
+&lt;pre class=&quot;language-rust&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-rust&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; array &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; 
+&lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; index&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;i32&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token comment&quot;&gt;// This won&#39;t compile:&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; element &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now why exactly can&#39;t we use a &lt;code&gt;i32&lt;/code&gt; to index a collection? And what does the type &lt;code&gt;usize&lt;/code&gt; represent?&lt;/p&gt;
+&lt;h2 id=&quot;usize&quot; tabindex=&quot;-1&quot;&gt;usize &lt;a class=&quot;header-anchor&quot; href=&quot;https://jochen.fyi/posts/usize/#usize&quot;&gt;&lt;span&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The Rust documentation reads:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This type describes the pointer-sized unsigned integer type and is used to index and measure memory. The size of this primitive is how many bytes it takes to reference any location in memory. For example, on a 32 bit target, this is 4 bytes and on a 64 bit target, this is 8 bytes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A pointer-sized integer refers to an integer that&#39;s the same size (in bytes) as a memory address (pointer) on your computer&#39;s architecture.  That means that on a 32-bit architecture we need 2&lt;sup&gt;32&lt;/sup&gt; different values to address all possible memory locations.&lt;/p&gt;
+&lt;p&gt;This is especially important when indexing collections as you can&#39;t have an array index larger than addressable memory.
+Even if a &lt;code&gt;i32&lt;/code&gt; value would numerically fit within the bounds of a &lt;code&gt;usize&lt;/code&gt; on a 64-bit system, Rust requires an explicit cast.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is a deliberate design choice for type safety.&lt;/strong&gt;
+The goal is to ensure that indexing of a collection is done with the platform&#39;s native size type in mind, reducing bugs and forcing us to think about type conversions.&lt;/p&gt;
+&lt;p&gt;While a &lt;code&gt;i32&lt;/code&gt; fits into a &lt;code&gt;usize&lt;/code&gt;, the opposite is not always true. Be specific about your intent.&lt;/p&gt;
+</description>
+      <pubDate>Thu, 19 Dec 2024 18:00:00 +0000</pubDate>
+      <dc:creator>Jochen Stierberger</dc:creator>
+      <guid>https://jochen.fyi/posts/usize/</guid>
+    </item>
+  </channel>
+</rss>
