@@ -16,8 +16,12 @@
   <meta property="og:description" content="Personal Website" />
   <meta property="og:url" content="https://jochen.fyi" />
   <meta property="og:image" content="https://jochen.fyi/og.png" />
+      <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🍋</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope&display=swap" rel="stylesheet">
   <style>.postlist { counter-reset: start-from 2 }
 * {
   margin: 0;
@@ -31,7 +35,7 @@
   --c-500: #E7EBEE;
   --c-link: #fa8e2f;
   --serif: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol ;
-  --sans-serif: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+  --sans-serif: "Manrope", serif;
   --monospace: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; 
 }
 
@@ -65,13 +69,12 @@ main {
 }
 
 a:not(li a):not(header a) {
-  color: var(--c-link);
+  color: var(--c-t);
   text-decoration: underline;
   transition: .05s;
 }
 
 a:not(li a):not(header a):hover {
-  color: #b3621b;
   text-decoration: underline;
   transition: .05s;
 }
@@ -111,8 +114,9 @@ h6,
 }
 
 p {
-  font-family: var(--serif);
+  font-family: var(--sans-serif);
   margin-bottom: 1em;
+  line-height: 1.75;
 }
 
 section,
@@ -163,14 +167,17 @@ ul {
   margin-bottom: .5em;
   padding-left: 2em;
   list-style-type: circle;
+  line-height: 1.75;
+
 
   li {
-  font-family: var(--serif);
+  font-family: var(--sans-serif);
   }
 }
 
 ol {
   margin: 1em 0;
+  line-height: 1.75;
 }
 
 table {
@@ -219,6 +226,7 @@ tbody tr:nth-child(even) {
 }
 
 .postlist {
+  line-height: 1.25;
   list-style: none;
   padding: 0;
   padding-left: 1.5rem;
@@ -503,8 +511,6 @@ pre[class*="language-"] {
 
     <nav>
       <ul class="nav__list">
-        <li class="nav__item"><a href="/posts/" >Posts</a></li>
-        <li class="nav__item"><a href="/about/" >About</a></li>
         <!-- <li class="nav__item"><a href="feed.xml">RSS</a></li> -->
       </ul>
     </nav>
@@ -513,9 +519,7 @@ pre[class*="language-"] {
   <main>
     
 
-<h1>Hey, Hola, 你好, Bonjour, नमस्ते, 안녕하세요, مرحبا, Здравствуйте!</h1>
-
-<p>CrunchingNumbers is the outcome of thinking about great domain names on a Friday night. Now that I have this domain name, I have to do something with it. For now, it captures everything that interests within the Rust ecosystems and programming in general.</p>
+<p>CrunchingNumbers is the result of thinking about great domain names on a Friday night. Now that I have this domain name, I have to do something with it. For now, it’s a place to explore and share everything that sparks my interest in programming and technology.</p>
 
 
 <h1>Latest 1 Post</h1>

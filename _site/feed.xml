@@ -17,7 +17,7 @@
 &lt;span class=&quot;token comment&quot;&gt;// This won&#39;t compile:&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; element &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; array&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;index&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now why exactly can&#39;t we use a &lt;code&gt;i32&lt;/code&gt; to index a collection? And what does the type &lt;code&gt;usize&lt;/code&gt; represent?&lt;/p&gt;
-&lt;h2 id=&quot;usize&quot; tabindex=&quot;-1&quot;&gt;usize &lt;a class=&quot;header-anchor&quot; href=&quot;https://jochen.fyi/posts/usize/#usize&quot;&gt;&lt;span&gt;#&lt;/span&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2&gt;usize&lt;/h2&gt;
 &lt;p&gt;The Rust documentation reads:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;This type describes the pointer-sized unsigned integer type and is used to index and measure memory. The size of this primitive is how many bytes it takes to reference any location in memory. For example, on a 32 bit target, this is 4 bytes and on a 64 bit target, this is 8 bytes.&lt;/p&gt;

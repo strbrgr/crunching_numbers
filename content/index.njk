@@ -3,9 +3,7 @@ layout: layouts/home.njk
 numberOfLatestPostsToShow: 3
 ---
 
-<h1>Hey, Hola, 你好, Bonjour, नमस्ते, 안녕하세요, مرحبا, Здравствуйте!</h1>
-
-<p>CrunchingNumbers is the outcome of thinking about great domain names on a Friday night. Now that I have this domain name, I have to do something with it. For now, it captures everything that interests within the Rust ecosystems and programming in general.</p>
+<p>CrunchingNumbers is the result of thinking about great domain names on a Friday night. Now that I have this domain name, I have to do something with it. For now, it’s a place to explore and share everything that sparks my interest in programming and technology.</p>
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(numberOfLatestPostsToShow) %}
 <h1>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h1>
